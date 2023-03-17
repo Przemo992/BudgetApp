@@ -7,10 +7,11 @@ using namespace std;
 int main()
 {
     BudgetApp budgetApp;
-    //budgetApp.userRegister();
-    //budgetApp.userRegister();
 
-    budgetApp.displayAllUsers();
+    //budgetApp.userRegister();
+    //budgetApp.userRegister();
+    budgetApp.userLoggingIn();
+    //budgetApp.displayAllUsers();
 
     return 0;
 }
