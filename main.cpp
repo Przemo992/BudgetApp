@@ -11,6 +11,7 @@ int main()
     //budgetApp.userRegister();
     //budgetApp.userRegister();
     budgetApp.userLoggingIn();
+    budgetApp.addExpense();
     //budgetApp.displayAllUsers();
 
     return 0;

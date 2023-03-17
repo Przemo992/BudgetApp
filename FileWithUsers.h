@@ -13,9 +13,7 @@ class FileWithUsers
     CMarkup xml;
     string nameFileWithUsers;
 
-            User setUserData(int userId, string userLogin, string userPassword);
-
-
+    User setUserData(int userId, string userLogin, string userPassword);
 
 public:
     FileWithUsers();
