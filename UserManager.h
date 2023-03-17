@@ -12,7 +12,7 @@ using namespace std;
 
 class UserManager
 {
-        FileWithUsers fileWithUsers;
+    FileWithUsers fileWithUsers;
     int idLoggedUser;
     vector <User> users;
 

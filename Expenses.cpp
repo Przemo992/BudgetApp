@@ -19,9 +19,17 @@ void Expense::setItem(string item)
 {
     this->item = item;
 }
-void Expense::setAmount(string amount)
+void Expense::setAmount(float amount)
 {
     this->amount = amount;
+}
+int Expense::getExpenseId()
+{
+    return expenseId;
+}
+int Expense::getUserId()
+{
+    return userId;
 }
 int Expense::getDate()
 {
@@ -31,7 +39,7 @@ string Expense::getItem()
 {
     return item;
 }
-string Expense::getAmount()
+float Expense::getAmount()
 {
     return amount;
 }
