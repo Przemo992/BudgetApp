@@ -28,19 +28,51 @@ Expense BudgetManager::typeInNewExpenseData()
     expense.setExpenseId(getIdNewExpense());
     expense.setUserId(ID_LOGGED_USER);
 
-    int date;
+    string date="";
     string item = "";
-    float amount;
-    cout << "Podaj date wydatku"<<endl;
-    cin >> date;
+    string amount;
+    int intDate;
+    do
+    {
+        cout << "Podaj date wydatku w formacie yyyy-mm-dd"<<endl;
+        cin >> date;
+    } while (DateMenu::checkIsDateCorrect(date) == false);
+    intDate = stoi(HelpingMethods::eraseDashFromDate(date));
     cout << "Podaj na co wydano pieniadze"<<endl;
     cin >> item;
     cout << "Podaj wydana kwote"<<endl;
-    cin >> amount;
-
-    expense.setDate(date);
+    amount = HelpingMethods::getLine();
+    float amountWithDot = stof(HelpingMethods::changeCommaToDot(amount));
+    expense.setDate(intDate);
     expense.setItem(item);
-    expense.setAmount(amount);
+    expense.setAmount(amountWithDot);
 
     return expense;
+}
+
+void BudgetManager::displayExpenses()
+{
+    system("cls");
+    if (!expenses.empty())
+    {
+        cout << "             >>> WYDATKI <<<" << endl;
+        cout << "-----------------------------------------------" << endl;
+        for (vector <Expense> :: iterator itr = expenses.begin(); itr != expenses.end(); itr++)
+        {
+            displayExpenseData(*itr);
+        }
+        cout << endl;
+    }
+    else
+    {
+        cout << endl << "Brak Wydatkow." << endl << endl;
+    }
+    system("pause");
+}
+
+void BudgetManager::displayExpenseData(Expense expense)
+{
+    cout << endl << "Data:            " << HelpingMethods::insertDashesToDate(to_string(expense.getDate())) << endl;
+    cout << "Na co:           " << expense.getItem() << endl;
+    cout << "Kwota:           " << expense.getAmount() << endl;
 }

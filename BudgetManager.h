@@ -5,6 +5,8 @@
 #include "Incomes.h"
 
 #include "FileWithExpenses.h"
+#include "HelpingMethods.h"
+#include "DateMenu.h"
 
 using namespace std;
 
@@ -19,9 +21,14 @@ class BudgetManager
     vector <Income> incomes;
 
     int getIdNewExpense();
+    void displayExpenseData(Expense expense);
+
+
 public:
     BudgetManager(int idLoggedUser)
-    : ID_LOGGED_USER(idLoggedUser){};
+    : ID_LOGGED_USER(idLoggedUser){
+    expenses = fileWithExpenses.loadExpensesFromFile(ID_LOGGED_USER);
+    };
     void addExpense();
     Expense typeInNewExpenseData();
     void displayExpenses();

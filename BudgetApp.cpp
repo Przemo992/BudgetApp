@@ -20,3 +20,8 @@ void BudgetApp::addExpense()
 {
   budgetManager->addExpense();
 }
+
+void BudgetApp::displayExpenses()
+{
+    budgetManager->displayExpenses();
+}

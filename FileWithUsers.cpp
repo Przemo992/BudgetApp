@@ -48,11 +48,12 @@ vector <User> FileWithUsers::loadUsersFromFile()
             xml.FindElem( "Password" );
             MCD_STR userPassword = xml.GetData();
             xml.OutOfElem();
-            user = setUserData(userId, userLogin, userPassword);
-            users.push_back(user);
+                user = setUserData(userId, userLogin, userPassword);
+                users.push_back(user);
+
         }
     }
-return users;
+    return users;
 }
 
 User FileWithUsers::setUserData(int userId, string userLogin, string userPassword)

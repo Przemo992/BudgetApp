@@ -29,7 +29,7 @@ void FileWithExpenses::addExpenseToFile(Expense expense)
     xml.Save(nameFileWithExpenses);
 }
 
-vector <Expense> FileWithExpenses::loadExpensesFromFile()
+vector <Expense> FileWithExpenses::loadExpensesFromFile(int idLoggedUser)
 {
     Expense expense;
     vector <Expense> expenses;
@@ -54,11 +54,14 @@ vector <Expense> FileWithExpenses::loadExpensesFromFile()
             xml.FindElem( "Amount" );
             float amount = stof( MCD_2PCSZ(xml.GetData()) );
             xml.OutOfElem();
-            expense = setExpenseData(expenseId, userId, date, item, amount);
-            expenses.push_back(expense);
+            if(userId == idLoggedUser)
+            {
+                expense = setExpenseData(expenseId, userId, date, item, amount);
+                expenses.push_back(expense);
+            }
         }
     }
-return expenses;
+    return expenses;
 }
 
 Expense FileWithExpenses::setExpenseData(int expenseId, int userId, int date, string item, float amount)
