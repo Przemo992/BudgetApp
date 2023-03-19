@@ -17,6 +17,7 @@ public:
     void userLoggingIn();
     void displayAllUsers();
     void addExpense();
+    void displayExpenses();
 
 
 };

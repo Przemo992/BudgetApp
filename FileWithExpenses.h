@@ -18,6 +18,6 @@ class FileWithExpenses
 public:
     FileWithExpenses();
     void addExpenseToFile(Expense expense);
-    vector <Expense> loadExpensesFromFile();
+    vector <Expense> loadExpensesFromFile(int idLoggedUser);
 
 };
