@@ -1,20 +1,14 @@
+#ifndef INCOMES_H
+#define INCOMES_H
+
 #include <iostream>
+
+#include "FinancalOperation.h"
 
 using namespace std;
 
-class Income
+class Income :public FinancalOperation
 {
-    int date, incomeId, userId;
-    string item = "", amount = "";
 
-public:
-    void setIncomeId(int incomeId);
-    void setUserId(int userId);
-    void setDate(int date);
-    void setItem(string item);
-    void setAmount(string amount);
-
-    int getDate();
-    string getItem();
-    string getAmount();
 };
+#endif // INCOMES_H

@@ -1,16 +1,9 @@
 #include "FileWithExpenses.h"
 
-FileWithExpenses::FileWithExpenses()
-{
-    nameFileWithExpenses = "expenses.xml";
-}
-
 void FileWithExpenses::addExpenseToFile(Expense expense)
 {
 
-    bool fileExists = xml.Load( nameFileWithExpenses );
-
-    if (!fileExists)
+    if (!checkIsFileExist())
     {
         xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         xml.AddElem("Expenses");
@@ -20,13 +13,13 @@ void FileWithExpenses::addExpenseToFile(Expense expense)
     xml.IntoElem();
     xml.AddElem("Expense");
     xml.IntoElem();
-    xml.AddElem("ExpenseId", to_string(expense.getExpenseId()));
+    xml.AddElem("ExpenseId", to_string(expense.getId()));
     xml.AddElem("UserId", to_string(expense.getUserId()));
     xml.AddElem("Date", to_string(expense.getDate()));
     xml.AddElem("Item", expense.getItem());
     xml.AddElem("Amount", to_string(expense.getAmount()));
 
-    xml.Save(nameFileWithExpenses);
+    xml.Save(getFileName());
 }
 
 vector <Expense> FileWithExpenses::loadExpensesFromFile(int idLoggedUser)
@@ -34,9 +27,9 @@ vector <Expense> FileWithExpenses::loadExpensesFromFile(int idLoggedUser)
     Expense expense;
     vector <Expense> expenses;
     CMarkup xml;
-    bool fileExists = xml.Load(nameFileWithExpenses);
+    xml.Load(getFileName());
 
-    if (fileExists == true)
+    if (checkIsFileExist() == true)
     {
         xml.FindElem();
         xml.IntoElem();
@@ -68,11 +61,32 @@ Expense FileWithExpenses::setExpenseData(int expenseId, int userId, int date, st
 {
     Expense expense;
 
-    expense.setExpenseId(expenseId);
+    expense.setId(expenseId);
     expense.setUserId(userId);
     expense.setDate(date);
     expense.setItem(item);
     expense.setAmount(amount);
 
     return expense;
+}
+
+int FileWithExpenses::getLastExpenseId()
+{
+    int id = 0;
+
+    CMarkup xml;
+
+    xml.Load(getFileName());
+
+    xml.FindElem();
+    xml.IntoElem();
+    while ( xml.FindElem("Expense")  )
+    {
+        xml.IntoElem();
+        xml.FindElem( "ExpenseId" );
+        int expenseId = atoi( MCD_2PCSZ(xml.GetData()) );
+        if (expenseId > id) id = expenseId;
+        xml.OutOfElem();
+    }
+    return id;
 }

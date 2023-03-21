@@ -3,7 +3,7 @@
 string HelpingMethods::changeCommaToDot(string number)
 {
     string wanted=",";
-    int charPosition = number.find(wanted);
+    auto charPosition = number.find(wanted);
     if (charPosition!=string::npos){
         number.replace(charPosition,1,".");
     }
@@ -21,7 +21,7 @@ string HelpingMethods::getLine()
 string HelpingMethods::eraseDashFromDate(string date)
 {
     string wanted="-";
-    int charPosition = date.find(wanted);
+    auto charPosition = date.find(wanted);
     while (charPosition!=string::npos)
     {
         date.erase(charPosition,1);
@@ -35,4 +35,21 @@ string HelpingMethods::insertDashesToDate(string date)
     date.insert(4,"-");
     date.insert(7,"-");
     return date;
+}
+
+char HelpingMethods::getChar()
+{
+    string line = "";
+    char cHar  = {0};
+    cin.sync();
+    while (true) {
+        getline(cin, line);
+
+        if (line.length() == 1) {
+            cHar = line[0];
+            break;
+        }
+        cout << "To nie jest pojedynczy znak. Wpisz ponownie." << endl;
+    }
+    return cHar;
 }

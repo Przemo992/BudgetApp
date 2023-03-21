@@ -1,16 +1,9 @@
 #include "FileWithUsers.h"
 
-FileWithUsers::FileWithUsers()
-{
-    nameFileWithUsers = "users.xml";
-}
-
 void FileWithUsers::addUserToFile(User user)
 {
 
-    bool fileExists = xml.Load( nameFileWithUsers );
-
-    if (!fileExists)
+      if (!checkIsFileExist())
     {
         xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         xml.AddElem("Users");
@@ -24,7 +17,7 @@ void FileWithUsers::addUserToFile(User user)
     xml.AddElem("Login", user.getLogin());
     xml.AddElem("Password", user.getPassword());
 
-    xml.Save(nameFileWithUsers);
+    xml.Save(getFileName());
 }
 
 vector <User> FileWithUsers::loadUsersFromFile()
@@ -32,9 +25,9 @@ vector <User> FileWithUsers::loadUsersFromFile()
     User user;
     vector <User> users;
     CMarkup xml;
-    bool fileExists = xml.Load(nameFileWithUsers);
+    xml.Load(getFileName());
 
-    if (fileExists == true)
+    if (checkIsFileExist() == true)
     {
         xml.FindElem();
         xml.IntoElem();
@@ -48,8 +41,8 @@ vector <User> FileWithUsers::loadUsersFromFile()
             xml.FindElem( "Password" );
             MCD_STR userPassword = xml.GetData();
             xml.OutOfElem();
-                user = setUserData(userId, userLogin, userPassword);
-                users.push_back(user);
+            user = setUserData(userId, userLogin, userPassword);
+            users.push_back(user);
 
         }
     }
@@ -65,3 +58,30 @@ User FileWithUsers::setUserData(int userId, string userLogin, string userPasswor
     return user;
 }
 
+void FileWithUsers::changePassword(int loggedUserId, string newPassword)
+{
+    xml.Load( getFileName() );
+
+     if (!checkIsFileExist())
+    {
+        cout << "Blad zmiany hasla!";
+    }
+
+    xml.FindElem();
+    xml.IntoElem();
+    while( xml.FindElem("User"))
+    {
+        xml.IntoElem();
+        xml.FindElem("UserId");
+        int userId = atoi( MCD_2PCSZ(xml.GetData()));
+        if(userId == loggedUserId)
+        {
+            xml.FindElem("Password");
+            xml.RemoveElem();
+            xml.AddElem("Password", newPassword);
+            xml.OutOfElem();
+        }
+        xml.OutOfElem();
+    }
+    xml.Save(getFileName());
+}
