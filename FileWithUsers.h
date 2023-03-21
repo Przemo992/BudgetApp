@@ -4,20 +4,22 @@
 #include <string>
 
 #include "User.h"
+#include "XmlFile.h"
 #include "Markup.h"
 
 using namespace std;
 
-class FileWithUsers
+class FileWithUsers :public XmlFile
 {
     CMarkup xml;
-    string nameFileWithUsers;
 
     User setUserData(int userId, string userLogin, string userPassword);
 
 public:
-    FileWithUsers();
+    FileWithUsers(string fileName)
+    : XmlFile(fileName){};
     void addUserToFile(User user);
     vector <User> loadUsersFromFile();
+    void changePassword(int loggedUserId, string newPassword);
 
 };

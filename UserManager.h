@@ -20,7 +20,11 @@ class UserManager
     User typeInNewUserData();
 
 public:
-    UserManager();
+    UserManager(string fileName)
+    :fileWithUsers(fileName){
+       users = fileWithUsers.loadUsersFromFile();
+   idLoggedUser = 0;
+    };
     void userRegister();
     void userLoggingIn();
     void changeLoggedUserPassword();

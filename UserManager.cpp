@@ -1,11 +1,5 @@
 #include "UserManager.h"
 
-UserManager::UserManager()
-{
-   users = fileWithUsers.loadUsersFromFile();
-   idLoggedUser = 0;
-}
-
 int UserManager::getIdLoggedUser()
 {
     return idLoggedUser;
@@ -126,6 +120,7 @@ void UserManager::changeLoggedUserPassword()
             system("pause");
         }
     }
+    fileWithUsers.changePassword(idLoggedUser, newPassword);
     //plikZUzytkownikami.zapiszWszystkichUzytkownikowDoPliku(uzytkownicy);
 }
 
