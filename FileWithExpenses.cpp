@@ -54,7 +54,14 @@ vector <Expense> FileWithExpenses::loadExpensesFromFile(int idLoggedUser)
             }
         }
     }
+
+    std::sort( expenses.begin(), expenses.end(), Expense::comp);
     return expenses;
+}
+
+bool my_comp( std::pair< double, double > A, std::pair< double, double > B )
+{
+    return A.first < B.first;
 }
 
 Expense FileWithExpenses::setExpenseData(int expenseId, int userId, int date, string item, float amount)
@@ -90,3 +97,4 @@ int FileWithExpenses::getLastExpenseId()
     }
     return id;
 }
+

@@ -31,7 +31,7 @@ int FinancalOperation::getUserId()
 {
     return userId;
 }
-int FinancalOperation::getDate()
+int FinancalOperation::getDate() const
 {
     return date;
 }
@@ -42,4 +42,8 @@ string FinancalOperation::getItem()
 float FinancalOperation::getAmount()
 {
     return amount;
+}
+bool FinancalOperation::comp( const FinancalOperation & l, const FinancalOperation & r )
+{
+    return l.getDate() < r.getDate();
 }

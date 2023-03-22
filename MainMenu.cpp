@@ -24,10 +24,10 @@ char MainMenu::chooseOptionFromBudgetMenu()
     system("cls");
     cout << " >>> MENU UZYTKOWNIKA <<<" << endl;
     cout << "---------------------------" << endl;
-    cout << "1. Dodaj przychód" << endl;
+    cout << "1. Dodaj przychod" << endl;
     cout << "2. Dodaj wydatek" << endl;
-    cout << "3. Bilans z bie¿¹cego miesi¹ca" << endl;
-    cout << "4. Bilans z poprzedniego miesi¹ca" << endl;
+    cout << "3. Bilans z biezacego miesiaca" << endl;
+    cout << "4. Bilans z poprzedniego miesiaca" << endl;
     cout << "5. Bilans z wybranego okresu" << endl;
     cout << "---------------------------" << endl;
     cout << "6. Zmien haslo" << endl;

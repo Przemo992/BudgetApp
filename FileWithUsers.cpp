@@ -3,7 +3,8 @@
 void FileWithUsers::addUserToFile(User user)
 {
 
-      if (!checkIsFileExist())
+    xml.Load(getFileName());
+    if (!checkIsFileExist())
     {
         xml.SetDoc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
         xml.AddElem("Users");
@@ -24,7 +25,7 @@ vector <User> FileWithUsers::loadUsersFromFile()
 {
     User user;
     vector <User> users;
-    CMarkup xml;
+
     xml.Load(getFileName());
 
     if (checkIsFileExist() == true)

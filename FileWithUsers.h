@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
@@ -7,12 +6,9 @@
 #include "XmlFile.h"
 #include "Markup.h"
 
-using namespace std;
 
 class FileWithUsers :public XmlFile
 {
-    CMarkup xml;
-
     User setUserData(int userId, string userLogin, string userPassword);
 
 public:
@@ -21,5 +17,4 @@ public:
     void addUserToFile(User user);
     vector <User> loadUsersFromFile();
     void changePassword(int loggedUserId, string newPassword);
-
 };

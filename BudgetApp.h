@@ -1,9 +1,5 @@
-#include <iostream>
-
 #include "UserManager.h"
 #include "BudgetManager.h"
-
-using namespace std;
 
 class BudgetApp
 {
@@ -14,8 +10,14 @@ class BudgetApp
 
 public:
     BudgetApp(string fileNameWithUsers, string fileNameWithIncomes, string fileNameWithExpenses)
-    :userManager(fileNameWithUsers), NAME_FILE_WITH_INCOMES(fileNameWithIncomes), NAME_FILE_WITH_EXPENSES(fileNameWithExpenses){
-    budgetManager = NULL;
+        :userManager(fileNameWithUsers), NAME_FILE_WITH_INCOMES(fileNameWithIncomes), NAME_FILE_WITH_EXPENSES(fileNameWithExpenses)
+    {
+        budgetManager = NULL;
+    };
+    ~BudgetApp()
+    {
+        delete budgetManager;
+        budgetManager = NULL;
     };
     void setIdLoggedUser(int idLoggedUser);
     int getIdLoggedUser();
@@ -28,6 +30,7 @@ public:
     void displayIncomes();
     void changeLoggedUserPassword();
     void logOut();
-
-
+    void showBalanceForPresentMonth();
+    void showBalanceForLastMonth();
+    void showBalanceForSetDate();
 };

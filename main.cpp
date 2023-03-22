@@ -1,14 +1,8 @@
-#include <iostream>
-
 #include "BudgetApp.h"
 #include "MainMenu.h"
 
-using namespace std;
-
 int main()
 {
-    //KsiazkaAdresowa ksiazkaAdresowa("Uzytkownicy.txt", "Adresaci.txt");
-
     BudgetApp budgetApp("users.xml", "incomes.xml", "expenses.xml");
 
     char choose;
@@ -38,7 +32,6 @@ int main()
         }
         else
         {
-
             choose = MainMenu::chooseOptionFromBudgetMenu();
 
             switch (choose)
@@ -50,13 +43,13 @@ int main()
                 budgetApp.addExpense();
                 break;
             case '3':
-                budgetApp.displayExpenses();
+                budgetApp.showBalanceForPresentMonth();
                 break;
             case '4':
-                budgetApp.displayIncomes();
+                budgetApp.showBalanceForLastMonth();
                 break;
-           case '5':
-                //ksiazkaAdresowa.usunAdresata();
+            case '5':
+                budgetApp.showBalanceForSetDate();
                 break;
             case '6':
                 budgetApp.changeLoggedUserPassword();
@@ -64,6 +57,10 @@ int main()
             case '7':
                 budgetApp.setIdLoggedUser(0);
                 budgetApp.logOut();
+                break;
+            default:
+                cout << endl << "Nie ma takiej opcji w menu." << endl << endl;
+                system("pause");
                 break;
             }
         }
