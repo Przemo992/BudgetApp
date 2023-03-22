@@ -55,7 +55,7 @@ char HelpingMethods::getChar()
             cHar = line[0];
             break;
         }
-        cout << "To nie jest pojedynczy znak. Wpisz ponownie." << endl;
+        cout << "To nie jest pojedyäczy znak. Wpisz ponownie." << endl;
     }
 
     return cHar;
