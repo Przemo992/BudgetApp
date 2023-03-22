@@ -104,7 +104,7 @@ bool DateMenu::checkIsDateCorrect(string date)
 {
     if (date.length()<10)
     {
-        cout << "Podano bledna date, wprowadz jeszcze raz!\n";
+        cout << "Podano bledn¥ dat©, wprowad« jeszcze raz!\n";
         return false;
     }
 
@@ -120,7 +120,7 @@ bool DateMenu::checkIsDateCorrect(string date)
     }
     else
     {
-        cout << "\nPodano bledna date, wprowadz jeszcze raz!\n";
+        cout << "\nPodano bledn¥ dat©, wprowad« jeszcze raz!\n";
         return false;
     }
 }
@@ -132,7 +132,7 @@ int DateMenu::setDate()
     int intDate = 0;
 
     system("cls");
-    cout << "Z JAKA DATA CHCESZ WPROWADZIC OPERACJE?\n\n";
+    cout << "Z JAK¤ DAT¤ CHCESZ WPROWADZIC OPERACJE?\n\n";
     cout << "1. Data dzisiejsza\n";
     cout << "2. Inna data\n";
     choose = HelpingMethods::getChar();

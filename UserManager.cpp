@@ -24,7 +24,7 @@ bool UserManager::isExistLogin(string login)
     {
         if(users[i].getLogin() == login)
         {
-            cout << endl << "Istnieje uzytkownik o takim loginie." << endl;
+            cout << endl << "Istnieje u¾ytkownik o takim loginie." << endl;
             return true;
         }
 
@@ -39,7 +39,7 @@ void UserManager::userRegister()
     users.push_back(user);
     fileWithUsers.addUserToFile(user);
 
-    cout << endl << "Konto zalozono pomyslnie" << endl << endl;
+    cout << endl << "Konto zalo¾ono pomy˜lnie" << endl << endl;
     system("pause");
 }
 
@@ -59,7 +59,7 @@ User UserManager::typeInNewUserData()
     while (isExistLogin(user.getLogin()) == true);
 
     string password;
-    cout << "Podaj haslo: ";
+    cout << "Podaj hasˆo: ";
     password = hidingPassword();
     user.setPassword(password);
 
@@ -80,25 +80,25 @@ void UserManager::userLoggingIn()
         {
             for (int numberOfattempts = 3; numberOfattempts > 0; numberOfattempts--)
             {
-                cout << endl << "Podaj haslo. Pozostalo prob: " << numberOfattempts << ": ";
+                cout << endl << "Podaj hasˆo. Pozostalo pr¢b: " << numberOfattempts << ": ";
                     password = hidingPassword();
 
 
                 if (users[i].getPassword() == password)
                 {
-                    cout << endl << "Zalogowales sie." << endl << endl;
+                    cout << endl << "Zalogowale˜ sie." << endl << endl;
                     idLoggedUser = users[i].getId();
                     system("pause");
                     return;
                 }
             }
-            cout << "Wprowadzono 3 razy bledne haslo." << endl;
+            cout << "Wprowadzono 3 razy bl©dne hasˆo." << endl;
             system("pause");
             return;
         }
 
     }
-    cout << "Nie ma uzytkownika z takim loginem" << endl << endl;
+    cout << "Nie ma u¾ytkownika z takim loginem" << endl << endl;
     system("pause");
     return;
 }
@@ -106,7 +106,7 @@ void UserManager::userLoggingIn()
 void UserManager::changeLoggedUserPassword()
 {
     string newPassword = "";
-    cout << "Podaj nowe haslo: ";
+    cout << "Podaj nowe hasˆo: ";
     newPassword = hidingPassword();
 
     for (unsigned int i = 0; i < users.size(); i++)
@@ -114,7 +114,7 @@ void UserManager::changeLoggedUserPassword()
         if (users[i].getId() == idLoggedUser)
         {
             users[i].setPassword(newPassword);
-            cout << endl << "Haslo zostalo zmienione." << endl << endl;
+            cout << endl << "Hasˆo zostaˆo zmienione." << endl << endl;
             system("pause");
         }
     }
@@ -134,7 +134,7 @@ void UserManager::displayAllUsers()
     system("cls");
     if (!users.empty())
     {
-        cout << "             >>> UZYTKOWNICY <<<" << endl;
+        cout << "             >>> U½YTKOWNICY <<<" << endl;
         cout << "-----------------------------------------------" << endl;
         for (vector <User> :: iterator itr = users.begin(); itr != users.end(); itr++)
         {
@@ -144,7 +144,7 @@ void UserManager::displayAllUsers()
     }
     else
     {
-        cout << endl << "Brak Uzytkownikow." << endl << endl;
+        cout << endl << "Brak U¾ytkownikow." << endl << endl;
     }
     system("pause");
 }
