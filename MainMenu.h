@@ -1,9 +1,4 @@
-#include <string>
-
 #include "HelpingMethods.h"
-
-
-using namespace std;
 
 class MainMenu
 {

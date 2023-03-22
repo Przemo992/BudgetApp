@@ -38,7 +38,6 @@ void UserManager::userRegister()
 
     users.push_back(user);
     fileWithUsers.addUserToFile(user);
-    //plikZUzytkownikami.dopiszUzytkownikaDoPliku(user);
 
     cout << endl << "Konto zalozono pomyslnie" << endl << endl;
     system("pause");
@@ -61,8 +60,7 @@ User UserManager::typeInNewUserData()
 
     string password;
     cout << "Podaj haslo: ";
-    cin >> password;
-    //password = MetodyPomocnicze::zakrywanieHasla();
+    password = hidingPassword();
     user.setPassword(password);
 
     return user;
@@ -83,8 +81,8 @@ void UserManager::userLoggingIn()
             for (int numberOfattempts = 3; numberOfattempts > 0; numberOfattempts--)
             {
                 cout << endl << "Podaj haslo. Pozostalo prob: " << numberOfattempts << ": ";
-                    cin >> password;
-                    //haslo = MetodyPomocnicze::zakrywanieHasla();
+                    password = hidingPassword();
+
 
                 if (users[i].getPassword() == password)
                 {
@@ -109,19 +107,18 @@ void UserManager::changeLoggedUserPassword()
 {
     string newPassword = "";
     cout << "Podaj nowe haslo: ";
-    cin >> newPassword;
+    newPassword = hidingPassword();
 
     for (unsigned int i = 0; i < users.size(); i++)
     {
         if (users[i].getId() == idLoggedUser)
         {
             users[i].setPassword(newPassword);
-            cout << "Haslo zostalo zmienione." << endl << endl;
+            cout << endl << "Haslo zostalo zmienione." << endl << endl;
             system("pause");
         }
     }
     fileWithUsers.changePassword(idLoggedUser, newPassword);
-    //plikZUzytkownikami.zapiszWszystkichUzytkownikowDoPliku(uzytkownicy);
 }
 
 bool UserManager::isUserLogged()
@@ -157,4 +154,29 @@ void UserManager::displayUserData(User user)
     cout << endl << "Id:                 " << user.getId() << endl;
     cout << "Imie:               " << user.getLogin() << endl;
     cout << "Nazwisko:           " << user.getPassword() << endl;
+}
+string UserManager::hidingPassword()
+ {
+
+    constexpr char c_enter  = 13;
+    constexpr char c_backspace = 8;
+
+    string passwd;
+    char input_character;
+
+    input_character = getch();
+
+    while(input_character != c_enter) {
+
+        if(input_character == c_backspace && passwd.size()) {
+            cout << "\b \b";
+            passwd.pop_back();
+        } else if(input_character != c_backspace) {
+            cout.put('*');
+            passwd += input_character;
+        }
+
+        input_character = getch();
+    }
+    return passwd;
 }

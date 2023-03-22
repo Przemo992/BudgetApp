@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
@@ -7,12 +6,8 @@
 #include "XmlFile.h"
 #include "Markup.h"
 
-using namespace std;
-
 class FileWithIncomes :public XmlFile
 {
-
-
     Income setIncomeData(int incomeId, int userId, int date, string item, float amount);
 
 public:
@@ -21,5 +16,4 @@ public:
     void addIncomeToFile(Income income);
     vector <Income> loadIncomesFromFile(int idLoggedUser);
     int getLastIncomeId();
-
 };

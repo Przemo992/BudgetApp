@@ -11,8 +11,6 @@ int BudgetManager::getIdNewExpense()
     {
         return fileWithExpenses.getLastExpenseId() + 1;
     }
-
-
 }
 
 void BudgetManager::addExpense()
@@ -22,6 +20,8 @@ void BudgetManager::addExpense()
     expenses.push_back(expense);
 
     fileWithExpenses.addExpenseToFile(expense);
+
+    std::sort( expenses.begin(), expenses.end(), Expense::comp);
 
     cout << endl << "Dodano wydatek pomyslnie" << endl << endl;
     system("pause");
@@ -39,15 +39,16 @@ Expense BudgetManager::typeInNewExpenseData()
     string amount;
     int intDate = 0;
 
-    while(intDate == 0){
-    intDate = dateMenu.setDate();
+    while(intDate == 0)
+    {
+        intDate = dateMenu.setDate();
     }
 
     cout << "Podaj na co wydano pieniadze"<<endl;
-    cin >> item;
+    item = HelpingMethods::getLine();
     cout << "Podaj wydana kwote"<<endl;
-    amount = HelpingMethods::getLine();
-    float amountWithDot = stof(HelpingMethods::changeCommaToDot(amount));
+    amount = HelpingMethods::changeCommaToDot(HelpingMethods::typeInFloatNumber());
+    float amountWithDot = stof(amount);
 
     expense.setDate(intDate);
     expense.setItem(item);
@@ -59,6 +60,7 @@ Expense BudgetManager::typeInNewExpenseData()
 void BudgetManager::displayExpenses()
 {
     system("cls");
+
     if (!expenses.empty())
     {
         cout << "             >>> WYDATKI <<<" << endl;
@@ -73,19 +75,22 @@ void BudgetManager::displayExpenses()
     {
         cout << endl << "Brak Wydatkow." << endl << endl;
     }
+
     system("pause");
 }
 
 void BudgetManager::displayExpenseData(Expense expense)
 {
-    cout << endl << "Data:            " << HelpingMethods::insertDashesToDate(to_string(expense.getDate())) << endl;
-    cout << "Na co:           " << expense.getItem() << endl;
-    cout << "Kwota:           " << expense.getAmount() << endl;
+    cout << "Data          " << HelpingMethods::insertDashesToDate(to_string(expense.getDate())) << endl;
+    cout << "Na co         " << expense.getItem() << endl;
+    cout << "Kwota         " << fixed <<setprecision(2);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),12);
+    cout << expense.getAmount() <<" zl"<< endl << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
 }
 
 int BudgetManager::getIdNewIncome()
 {
-
     if (fileWithIncomes.checkIsFileExist() == false)
     {
         return 1;
@@ -94,8 +99,6 @@ int BudgetManager::getIdNewIncome()
     {
         return fileWithIncomes.getLastIncomeId() + 1;
     }
-
-
 }
 
 void BudgetManager::addIncome()
@@ -106,9 +109,11 @@ void BudgetManager::addIncome()
 
     fileWithIncomes.addIncomeToFile(income);
 
-    cout << endl << "Dodano przychod pomyslnie" << endl << endl;
-    system("pause");
+    std::sort( incomes.begin(), incomes.end(), Income::comp);
 
+    cout << endl << "Dodano przychod pomyslnie!" << endl << endl;
+
+    system("pause");
 }
 
 Income BudgetManager::typeInNewIncomeData()
@@ -122,14 +127,18 @@ Income BudgetManager::typeInNewIncomeData()
     string amount;
     int intDate = 0;
 
-    while(intDate == 0){
-    intDate = dateMenu.setDate();
+    while(intDate == 0)
+    {
+        intDate = dateMenu.setDate();
     }
 
     cout << "Podaj skad wplynely srodki"<<endl;
-    cin >> item;
+
+    item = HelpingMethods::getLine();
+
     cout << "Podaj zarobiona kwote"<<endl;
-    amount = HelpingMethods::getLine();
+
+    amount = HelpingMethods::changeCommaToDot(HelpingMethods::typeInFloatNumber());
     float amountWithDot = stof(HelpingMethods::changeCommaToDot(amount));
 
     income.setDate(intDate);
@@ -142,9 +151,10 @@ Income BudgetManager::typeInNewIncomeData()
 void BudgetManager::displayIncomes()
 {
     system("cls");
+
     if (!incomes.empty())
     {
-        cout << "             >>> PRZYCHODY <<<" << endl;
+        cout << "              >>> PRZYCHODY <<<                " << endl;
         cout << "-----------------------------------------------" << endl;
         for (vector <Income> :: iterator itr = incomes.begin(); itr != incomes.end(); itr++)
         {
@@ -156,17 +166,144 @@ void BudgetManager::displayIncomes()
     {
         cout << endl << "Brak Przychodow." << endl << endl;
     }
+
     system("pause");
 }
 
 void BudgetManager::displayIncomesData(Income income)
 {
-    cout << endl << "Data Wplywow:    " << HelpingMethods::insertDashesToDate(to_string(income.getDate())) << endl;
-    cout << "Skad:            " << income.getItem() << endl;
-    cout << "Kwota:           " << income.getAmount() << endl;
+    cout << "Data          " << HelpingMethods::insertDashesToDate(to_string(income.getDate())) << endl;
+    cout << "Zrodlo        " << income.getItem() << endl;
+    cout << "Kwota         " << fixed <<setprecision(2);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),2);
+    cout << income.getAmount() <<" zl"<< endl << endl;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
 }
 void BudgetManager::logOut()
 {
     expenses.clear();
     incomes.clear();
+}
+
+void BudgetManager::showBalanceForChosenDateRange(int dateFrom, int dateTo)
+{
+    float expensesSum = 0, incomesSum = 0;
+
+    system("cls");
+
+    if (!incomes.empty())
+    {
+        cout << "              >>> PRZYCHODY <<<                " << endl;
+        cout << "-----------------------------------------------" << endl;
+        for (vector <Income> :: iterator itr = incomes.begin(); itr != incomes.end(); itr++)
+        {
+            if (itr->getDate() >= dateFrom && itr->getDate()<= dateTo)
+            {
+                displayIncomesData(*itr);
+                incomesSum += itr->getAmount();
+            }
+
+        }
+    }
+
+    if (incomesSum == 0)
+    {
+        cout << endl << "Brak Przychodow w wybranym okresie." << endl << endl;
+    }
+
+    if (!expenses.empty())
+    {
+        cout << "               >>> WYDATKI <<<                 " << endl;
+        cout << "-----------------------------------------------" << endl;
+        for (vector <Expense> :: iterator itr = expenses.begin(); itr != expenses.end(); itr++)
+        {
+            if (itr->getDate() >= dateFrom && itr->getDate()<= dateTo)
+            {
+                displayExpenseData(*itr);
+                expensesSum += itr->getAmount();
+            }
+        }
+    }
+
+    if (expensesSum == 0)
+    {
+        cout << endl << "Brak Wydatkow w wybranym okresie." << endl << endl;
+    }
+
+    if (expensesSum == 0 && incomesSum == 0)
+    {
+        system("pause");
+        return;
+    }
+
+    cout << endl<<"Suma Twoich przychodow w wybranym okresie to: " << incomesSum << " zl\n";
+    cout << endl<<"Suma Twoich wydatkow w wybranym okresie to:   " << expensesSum << " zl\n\n";
+
+    if (incomesSum - expensesSum < 0)
+    {
+        cout << "\nNiestety jestes na minusie, bilans wynosi: ";
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),12);
+        cout << incomesSum - expensesSum << " zl\n\n";
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
+    }
+    else
+    {
+        cout << "Pozostala kwota do wydania: ";
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),2);
+        cout << incomesSum - expensesSum << " zl\n\n";
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
+    }
+
+    system("pause");
+}
+
+void BudgetManager::showBalanceForPresentMonth()
+{
+    int dateFrom = stoi(dateMenu.getFirstDayPresentMonth());
+    int dateTo = stoi(dateMenu.getPresentDate());
+    showBalanceForChosenDateRange(dateFrom, dateTo);
+}
+
+void BudgetManager::showBalanceForLastMonth()
+{
+    int year = dateMenu.getPresentYear();
+
+    int month = dateMenu.getPresentMonth();
+    string monthStr = "";
+
+    if (month == 1)
+    {
+        month = 12;
+        year--;
+        monthStr = "12";
+    }
+    else
+    {
+        month = dateMenu.getPresentMonth() - 1;
+        monthStr = to_string(month);
+    }
+
+    if(monthStr.length() < 2) monthStr = "0" + monthStr;
+
+    string yearStr = to_string(year);
+    string daysOfMonth = to_string(dateMenu.daysOfMonth(month, year));
+    string dateFromStr = yearStr + monthStr + "01";
+    string dateToStr = yearStr + monthStr + daysOfMonth;
+
+    int dateFrom = stoi(dateFromStr);
+    int dateTo = stoi(dateToStr);
+
+    showBalanceForChosenDateRange(dateFrom, dateTo);
+}
+
+void BudgetManager::showBalanceForSetDate()
+{
+    cout << "Wprowadz zakres daty dla bilansu.\n";
+    cout << "UWAGA ( Podaj date w formacie yyyy-mm-dd )\n\n";
+    cout << "\nwprowadz date od: ";
+    int dateFrom = dateMenu.typeInDate();
+    cout << " do: ";
+    int dateTo = dateMenu.typeInDate();
+
+    showBalanceForChosenDateRange(dateFrom, dateTo);
 }

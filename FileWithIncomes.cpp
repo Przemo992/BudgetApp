@@ -54,6 +54,7 @@ vector <Income> FileWithIncomes::loadIncomesFromFile(int idLoggedUser)
             }
         }
     }
+        std::sort( incomes.begin(), incomes.end(), Income::comp);
     return incomes;
 }
 

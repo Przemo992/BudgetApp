@@ -7,20 +7,16 @@ void BudgetApp::userRegister()
 void BudgetApp::userLoggingIn()
 {
     userManager.userLoggingIn();
-
     budgetManager = new BudgetManager(NAME_FILE_WITH_INCOMES, NAME_FILE_WITH_EXPENSES, userManager.getIdLoggedUser());
-
 }
 void BudgetApp::displayAllUsers()
 {
     userManager.displayAllUsers();
 }
-
 void BudgetApp::addExpense()
 {
-  budgetManager->addExpense();
+    budgetManager->addExpense();
 }
-
 void BudgetApp::displayExpenses()
 {
     budgetManager->displayExpenses();
@@ -44,6 +40,18 @@ void BudgetApp::changeLoggedUserPassword()
 void BudgetApp::setIdLoggedUser(int idLoggedUser)
 {
     userManager.setIdLoggedUser(idLoggedUser);
+}
+void BudgetApp::showBalanceForPresentMonth()
+{
+    budgetManager->showBalanceForPresentMonth();
+}
+void BudgetApp::showBalanceForLastMonth()
+{
+    budgetManager->showBalanceForLastMonth();
+}
+void BudgetApp::showBalanceForSetDate()
+{
+    budgetManager->showBalanceForSetDate();
 }
 void BudgetApp::logOut()
 {

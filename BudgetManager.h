@@ -1,5 +1,5 @@
-#include <iostream>
 #include <vector>
+#include <iomanip>
 
 #include "Expenses.h"
 #include "Incomes.h"
@@ -9,14 +9,14 @@
 #include "HelpingMethods.h"
 #include "DateMenu.h"
 
-using namespace std;
-
 class BudgetManager
 {
-    FileWithExpenses fileWithExpenses;
-    FileWithIncomes fileWithIncomes;
-DateMenu dateMenu;
     const int ID_LOGGED_USER;
+
+    FileWithIncomes fileWithIncomes;
+    FileWithExpenses fileWithExpenses;
+
+    DateMenu dateMenu;
 
     vector <Expense> expenses;
     vector <Income> incomes;
@@ -25,23 +25,23 @@ DateMenu dateMenu;
     void displayExpenseData(Expense expense);
     int getIdNewIncome();
     void displayIncomesData(Income income);
-
+    void showBalanceForChosenDateRange(int dateFrom, int dateTo);
 
 public:
     BudgetManager(string nameFileWithIncomes, string nameFileWithExpenses, int idLoggedUser)
-    : ID_LOGGED_USER(idLoggedUser), fileWithIncomes(nameFileWithIncomes), fileWithExpenses(nameFileWithExpenses){
-    expenses = fileWithExpenses.loadExpensesFromFile(ID_LOGGED_USER);
-    incomes = fileWithIncomes.loadIncomesFromFile(ID_LOGGED_USER);
+        : ID_LOGGED_USER(idLoggedUser), fileWithIncomes(nameFileWithIncomes), fileWithExpenses(nameFileWithExpenses)
+    {
+        expenses = fileWithExpenses.loadExpensesFromFile(ID_LOGGED_USER);
+        incomes = fileWithIncomes.loadIncomesFromFile(ID_LOGGED_USER);
     };
-    void addExpense();
+    Income typeInNewIncomeData();
     Expense typeInNewExpenseData();
+    void addExpense();
     void displayExpenses();
     void addIncome();
-    Income typeInNewIncomeData();
     void displayIncomes();
     void logOut();
-
-
-
-
+    void showBalanceForPresentMonth();
+    void showBalanceForLastMonth();
+    void showBalanceForSetDate();
 };
